@@ -29,8 +29,16 @@ function shouldContinue() {
 
 // In the event loop, every execution of this loop is 1 "tick"
 while (shouldContinue()) {
-  // before event loop executes, node does a quick check to see if the tick should be executed
-  // If it shouldn't, the program executes back to the terminal
+  // 1. Node looks at pendingTimers and sees if any functions are ready to be called
+  //        - setTimeout and setIntveral only
+  // 2. Node looks at pendingOSTasks and pendingOperations and calls relevant callbacks
+  // 3. Node pauses execution temporarily and waits for new events to occur.
+  //      Node contiues when...
+  //        - a new pendingOSTask is done
+  //        - a new pendingOperation is done
+  //        - a timer is about to complete
+  // 4. Look at pendingTimers.  Call any setImmediate
+  // 5. Handle any 'close' events
 }
 
 // exit back to terminal
