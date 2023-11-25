@@ -1,14 +1,5 @@
 const crypto = require("crypto");
 
-// const start = Date.now();
-// crypto.pbkdf2("a", "b", 100_000, 512, "sha512", () => {
-//   console.log("1:", Date.now() - start);
-// });
-
-// crypto.pbkdf2("a", "b", 100_000, 512, "sha512", () => {
-//   console.log("2:", Date.now() - start);
-// });
-
 /**
  * Two important notes...
  *  1. When running this file, both calls to pbkdf2 will occur at the exact same time
@@ -20,6 +11,22 @@ const crypto = require("crypto");
  *  first function to complete before it would start.
  */
 
+// const start = Date.now();
+// crypto.pbkdf2("a", "b", 100_000, 512, "sha512", () => {
+//   console.log("1:", Date.now() - start);
+// });
+
+// crypto.pbkdf2("a", "b", 100_000, 512, "sha512", () => {
+//   console.log("2:", Date.now() - start);
+// });
+
+/**
+ * Exactly 4 threads are available.
+ * The first 4 function calls are called at the same time.  The fifth call had to wait
+ *  for one thread to become free before it could start, so it's total time to complete
+ *  will be roughly double the time the fastest of the first 4 calls took to complete.
+ *
+ */
 const start = Date.now();
 crypto.pbkdf2("a", "b", 100_000, 512, "sha512", () => {
   console.log("1:", Date.now() - start);
