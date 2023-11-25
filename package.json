@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "benchmark": "ab -c 50 -n 500 localhost:3000/fast"
+    "benchmark": "ab -c 50 -n 500 localhost:3000/fast",
+    "pm2": "pm2 start ./notes/section-2/2-pm2-refactor.js -i 0"
   },
   "keywords": [],
   "author": "",
