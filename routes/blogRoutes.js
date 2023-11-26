@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
 
+// const redis = require("redis");
+// const redisUrl = "redis://127.0.0.1:6379";
+// const client = redis.createClient(redisUrl);
+
 const Blog = mongoose.model("Blog");
 
 module.exports = (app) => {
@@ -20,6 +24,18 @@ module.exports = (app) => {
   });
 
   app.post("/api/blogs", requireLogin, async (req, res) => {
+    const redis = require("redis");
+    const redisUrl = "redis://127.0.0.1:6379";
+    const client = redis.createClient(redisUrl);
+    const util = require("util");
+
+    // Is any cached data available?
+    const cachedBlogs = client.get(req.user.id);
+
+    // If yes, respond to the request right away and return
+
+    // If no, respond to request and update cache to store data
+
     const { title, content } = req.body;
 
     const blog = new Blog({
